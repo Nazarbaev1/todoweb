@@ -12,7 +12,6 @@ if (todos) {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-
     addTodo();
 });
 
@@ -29,41 +28,35 @@ function addTodo(todo) {
             todoEl.classList.add("completed");
         }
 
-        todoEl.innerText = todoText;
+        // ❌ УЯЗВИМОСТЬ: Использование innerHTML вместо innerText
+        // Это позволяет выполнять HTML-теги и JS-скрипты
+        todoEl.innerHTML = todoText; 
 
         todoEl.addEventListener("click", () => {
             todoEl.classList.toggle("completed");
-
             updateLS();
         });
 
         todoEl.addEventListener("contextmenu", (e) => {
             e.preventDefault();
-
             todoEl.remove();
-
             updateLS();
         });
 
         todosUL.appendChild(todoEl);
-
         input.value = "";
-
         updateLS();
     }
 }
 
 function updateLS() {
     const todosEl = document.querySelectorAll("li");
-
     const todos = [];
-
     todosEl.forEach((todoEl) => {
         todos.push({
-            text: todoEl.innerText,
+            text: todoEl.innerHTML, 
             completed: todoEl.classList.contains("completed"),
         });
     });
-
     localStorage.setItem("todos", JSON.stringify(todos));
 }
