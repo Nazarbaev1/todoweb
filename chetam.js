@@ -28,8 +28,7 @@ function addTodo(todo) {
             todoEl.classList.add("completed");
         }
 
-        // ❌ УЯЗВИМОСТЬ: Использование innerHTML вместо innerText
-        // Это позволяет выполнять HTML-теги и JS-скрипты
+
         todoEl.innerHTML = todoText; 
 
         todoEl.addEventListener("click", () => {
